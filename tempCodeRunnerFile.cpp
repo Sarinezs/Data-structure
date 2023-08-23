@@ -1,0 +1,2 @@
+
+    Node* current = head;
