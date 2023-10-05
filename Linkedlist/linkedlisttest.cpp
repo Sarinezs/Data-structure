@@ -13,20 +13,6 @@ class linkedlist{
 public:
     node* head;
 
-    void push_front(int data){
-        node* x = new node(data);
-        x->next = head;
-        head = x;
-    }
-
-    int pop_front(){
-        node* x;
-        x = head;
-        head = head->next;
-
-        return x->data;
-    }
-
     int search(int pos){
         node* ptr = head;
         int i = 0;
@@ -35,11 +21,10 @@ public:
                 return i;
             }
             else{
-                i++;
                 ptr = ptr->next;
+                i++;
             }
         }
-
         return -1;
     }
 
@@ -51,18 +36,57 @@ public:
         }
         cout<<endl;
     }
+
+    int erase(int pos){
+        node* x;
+        node* ptr = head;
+        int position = search(pos);
+        if(head == NULL){
+            return -1;
+        }
+        if(head->next == NULL){
+            return -1;
+        }
+        if(search(pos) == -1){
+            return -1;
+        }
+        if(head->data == pos){
+            x = head;
+            head = head->next;
+            return x->data;
+        }
+        for(int i = 0; i<position-1; i++){
+            ptr = ptr->next;
+        }
+        x = ptr->next;
+        ptr->next = ptr->next->next;
+    }
+
+    void insertafter(int data, int pos){
+        node* x = new node(data);
+        node* ptr = head;
+        int position = search(pos);
+        if(search(data) != -1){
+            return;
+        }
+        if(head == NULL){
+            x->data = data;
+            x->next = head;
+            head = x;
+            return;
+        }
+        if(position == -1){
+            while(ptr->next != NULL){
+                ptr = ptr->next;
+            }
+            x->next = ptr->next;
+            ptr->next = x;
+        }
+        for(int i = 0; i<position; i++){
+            ptr = ptr->next;
+        }
+        x->next = ptr->next;
+        ptr->next = x;
+        return;
+    }
 };
-
-int main(){
-    linkedlist* list = new linkedlist();
-
-    list->push_front(4);
-    list->push_front(3);
-    list->push_front(2);
-    list->push_front(1);
-
-    cout<<list->pop_front()<<endl;
-    cout<<list->pop_front()<<endl;
-    cout<<list->pop_front()<<endl;
-    cout<<list->pop_front()<<endl;
-}

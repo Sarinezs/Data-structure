@@ -131,10 +131,18 @@ public:
             return;
         }
 
+        if(head == NULL){
+            x->data = data;
+            x->next = head;
+            head = x;
+            return;
+        }
+
         if(position == -1){
-            while(ptr->next != NULL){
+            while(ptr->next != NULL){ //ใส่ท้ายสุด
                 ptr = ptr->next;
             }
+            x->next = ptr->next;
             ptr->next = x;
             print();
             return;
