@@ -44,6 +44,7 @@ class tree{
 				}
 			}
 		}
+		
 		void add_node(int value)
 		{
 			node *n = r;
