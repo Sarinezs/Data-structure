@@ -95,7 +95,10 @@ public:
 			if(hash_key[j] == key){
 				return hash_table[j];
 			}
-			if(hash_key[j] == -1){
+			// if(hash_key[j] == -1){
+			// 	return "-";
+			// }
+			else{
 				return "-";
 			}
 		}

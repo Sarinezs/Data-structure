@@ -1,71 +1,63 @@
-#include<iostream>
+#include<bits/stdc++.h>
+#define size 17
 using namespace std;
 class node{
 public:
     int key;
     string data;
     node* next;
-
+    
     node(){
         key = -1;
         data = "-";
         next = NULL;
     }
 };
-class separate_chaining{
+
+class separate{
 public:
-    int n;
-    node hash_table[100];
-    separate_chaining(int p_n){
-        n = p_n;
+    node* n[size];
+    separate(){
+        for(int i = 0; i<size; i++){
+            n[i] = new node();
+        }
     }
 
-    void add(int key, string data){
-        int j = key%n;
-        if(hash_table[j].next == NULL){
-            hash_table[j].data = data;
-            hash_table[j].key = key;
-            hash_table[j].next = new node();
+    void add(int keyin, string din){
+        int k = keyin % size;
+        if(n[k]->key == -1){
+            n[k]->data = din;
+            n[k]->key = keyin;
+            n[k]->next = new node();
         }
         else{
-            node* tnode = hash_table[j].next;
-            while(tnode->next != NULL){
-                tnode = tnode->next;
+            node* ptr = n[k];
+            while(ptr->next != NULL){
+                ptr = ptr->next;
             }
-            tnode->data = data;
-            tnode->key = key;
-            tnode->next = new node();
+            ptr->data = din;
+            ptr->key = keyin;
         }
     }
 
-    string search(int key){
-        int j = key%n;
-        for(int i = 0; i<n; i++){
-            if(hash_table[j].key == key){
-                return hash_table[j].data;
+    string search(int keyin){
+        int k = keyin % size;
+        node* ptr = n[k];
+        while(ptr != NULL){
+            if(ptr->key == keyin){
+                return ptr->data;
             }
-            else{
-                node* tnode = hash_table[j].next;
-                while(tnode != NULL){
-                    if(tnode->key == key){
-                        return tnode->data;
-                    }
-                    tnode = tnode->next;
-                }
-            }
-            return "-";
+            ptr = ptr->next;
         }
+        return "-";
     }
 
     void print(){
-        for(int i = 0; i<n; i++){
-            cout<<"("<<hash_table[i].key<<","<<hash_table[i].data<<")";
-            if(hash_table[i].next != NULL){
-                node* tnode = hash_table[i].next;
-                while(tnode->next != NULL){
-                    cout<<"("<<tnode->key<<","<<tnode->data<<")";
-                    tnode = tnode->next;
-                }
+        for(int i = 0; i<size; i++){
+            node* ptr = n[i];
+            while(ptr != NULL){
+                cout<<ptr->key<<","<<ptr->data<<" ";
+                ptr = ptr->next;
             }
             cout<<endl;
         }
@@ -73,26 +65,26 @@ public:
 };
 
 int main(){
-	separate_chaining s(17);
-	char mode;
-	int key;
-	string data;
-	while(1){
-		cin>>mode;
-		if(mode == 'a'){
-			cin>>key;
-			cin>>data;
-			s.add(key, data);
-		}
-		else if(mode == 'p'){
-			s.print();
-		}
-		else if(mode == 's'){
-			cin>>key;
-			cout<<s.search(key)<<endl;
-		}
-		else if(mode == 'e'){
-			break;
-		}
-	}
+    separate* s = new separate();
+    char mode;
+    int key;
+    string data;
+    while(1){
+        cin>>mode;
+        if(mode == 'a'){
+            cin>>key;
+            cin>>data;
+            s->add(key,data);
+        }
+        else if(mode == 's'){
+            cin>>key;
+            cout<<s->search(key)<<endl;
+        }
+        else if(mode == 'p'){
+            s->print();
+        }
+        else if(mode == 'e'){
+            break;
+        }
+    }
 }
