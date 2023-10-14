@@ -1,6 +1,6 @@
 #include<iostream>
 #define n 5
-#define n_student 30
+#define n_student 7
 using namespace std;
 class Node_Subject{
 public:
@@ -135,6 +135,7 @@ int main(){
     string stu_lastname;
     string stu_score;
     separate* s = new separate();
+
     cout<<"How to use :"<<endl;
     cout<<"a = add_subject (ex):---> a 189 SA"<<endl;
     cout<<"i = add_student (ex):---> i 189 332 suriya meerua 50"<<endl;
