@@ -1,24 +1,24 @@
-#include<bits/stdc++.h>
-#define size 17
+#include<iostream>
 using namespace std;
+#define size 17
 class node{
 public:
     int key;
-    string data;
+    string value;
     node* next;
-    
+
     node(){
         key = -1;
-        data = "-";
+        value = "";
         next = NULL;
     }
-    node(int keyin, string v){
+
+    node(int keyin, string data){
         key = keyin;
-        data = v;
+        value = data;
         next = NULL;
     }
 };
-
 class separate{
 public:
     node* n[size];
@@ -28,23 +28,20 @@ public:
         }
     }
 
-    void add(int keyin, string din){
+    void add(int keyin, string data){
         int k = keyin % size;
         if(n[k]->key == -1){
-            n[k]->data = din;
             n[k]->key = keyin;
+            n[k]->value = data;
             // n[k]->next = new node();
         }
         else{
-            node* x = new node(keyin, din);
+            node* x = new node(keyin, data);
             node* ptr = n[k];
             while(ptr->next != NULL){
                 ptr = ptr->next;
             }
             ptr->next = x;
-            // ptr->data = din;
-            // ptr->key = keyin;
-            // ptr->next = new node();
         }
     }
 
@@ -53,10 +50,10 @@ public:
         node* ptr = n[k];
         while(ptr != NULL){
             if(ptr->key == keyin){
-                return ptr->data;
+                return ptr->value;
             }
             ptr = ptr->next;
-        }
+        }            
         return "-";
     }
 
@@ -64,7 +61,7 @@ public:
         for(int i = 0; i<size; i++){
             node* ptr = n[i];
             while(ptr != NULL){
-                cout<<ptr->key<<","<<ptr->data<<" ";
+                cout<<ptr->key<<","<<ptr->value<<" ";
                 ptr = ptr->next;
             }
             cout<<endl;
@@ -73,7 +70,7 @@ public:
 };
 
 int main(){
-    separate* s = new separate();
+    separate* s = new separate();;
     char mode;
     int key;
     string data;
@@ -82,7 +79,7 @@ int main(){
         if(mode == 'a'){
             cin>>key;
             cin>>data;
-            s->add(key,data);
+            s->add(key, data);
         }
         else if(mode == 's'){
             cin>>key;
